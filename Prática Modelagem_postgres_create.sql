@@ -7,6 +7,21 @@ CREATE TABLE "users" (
 
 
 
+CREATE TABLE "clothingCategories" (
+	"id" SERIAL PRIMARY KEY,
+	"name" TEXT NOT NULL UNIQUE
+);
+
+
+
+CREATE TABLE "clothes" (
+	"id" SERIAL PRIMARY KEY,
+	"size" TEXT NOT NULL,
+	"categoryId" INTEGER NOT NULL REFERENCES "clothingCategories"("id")
+);
+
+
+
 CREATE TABLE "products" (
 	"id" SERIAL PRIMARY KEY,
 	"name" TEXT NOT NULL UNIQUE,
@@ -26,17 +41,14 @@ CREATE TABLE "productsImages" (
 
 
 
-CREATE TABLE "clothes" (
+CREATE TABLE "addresses" (
 	"id" SERIAL PRIMARY KEY,
-	"size" TEXT NOT NULL,
-	"categoryId" INTEGER NOT NULL REFERENCES "clothingCategories"("id")
-);
-
-
-
-CREATE TABLE "clothingCategories" (
-	"id" SERIAL PRIMARY KEY,
-	"name" TEXT NOT NULL UNIQUE
+	"userId" INTEGER NOT NULL REFERENCES "users"("id"),
+	"cep" TEXT NOT NULL,
+	"street" TEXT NOT NULL,
+	"number" TEXT,
+	"city" TEXT NOT NULL,
+	"state" TEXT NOT NULL
 );
 
 
@@ -44,21 +56,9 @@ CREATE TABLE "clothingCategories" (
 CREATE TABLE "purchases" (
 	"id" SERIAL PRIMARY KEY,
 	"userId" INTEGER NOT NULL REFERENCES "users"("id"),
-	"address" INTEGER NOT NULL REFERENCES "addresses"("id"),
+	"addressId" INTEGER NOT NULL REFERENCES "addresses"("id"),
 	"date" TIMESTAMP NOT NULL DEFAULT NOW(),
 	"currentState" TEXT NOT NULL DEFAULT 'create'
-);
-
-
-
-CREATE TABLE "addresses" (
-	"id" SERIAL PRIMARY KEY,
-	"userId" TEXT NOT NULL REFERENCES "users"("id"),
-	"cep" TEXT NOT NULL,
-	"street" TEXT NOT NULL,
-	"number" TEXT,
-	"city" TEXT NOT NULL,
-	"state" TEXT NOT NULL
 );
 
 
