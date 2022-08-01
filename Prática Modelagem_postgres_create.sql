@@ -66,5 +66,6 @@ CREATE TABLE "purchases" (
 CREATE TABLE "productsPurchases" (
 	"id" SERIAL PRIMARY KEY,
 	"productId" INTEGER NOT NULL REFERENCES "products"("id"),
-	"purchaseId" INTEGER NOT NULL REFERENCES "purchases"("id")
+	"purchaseId" INTEGER NOT NULL REFERENCES "purchases"("id"),
+	"amount" INTEGER NOT NULL DEFAULT 1
 );
